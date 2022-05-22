@@ -1,0 +1,3 @@
+CC = gcc
+
+include Makefile.common

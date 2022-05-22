@@ -1,0 +1,28 @@
+include ../Makefile.inc
+
+SRC = cli.c fcode.c auxfile.c detokenize.c ast.c fstring.c
+SRC += words.c wordlist_v2.c wordlist_v3.c pprint.c compat_asprintf.c
+
+OBJ = $(SRC:%.c=%.o)
+INC = $(wildcard *.h)
+
+CFLAGS += -DFCODE_TOOLS_VERSION="\"$(FCODE_TOOLS_VERSION)\""
+
+
+.PHONY: all
+
+all: fcode
+
+
+fcode: $(OBJ)
+	$(CC) -o $@ $(OBJ) $(LIB)
+
+
+%.o: %.c $(INC)
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+
+.PHONY: clean
+
+clean:
+	rm -f fcode $(OBJ)

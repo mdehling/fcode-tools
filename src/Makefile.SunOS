@@ -1,0 +1,6 @@
+CC = /opt/SUNWspro/bin/cc
+#CC = gcc
+CFLAGS += -DCOMPAT_ASPRINTF	# Solaris
+#CFLAGS += -DCOMPAT_VA_COPY	# GCC / Solaris
+
+include Makefile.common

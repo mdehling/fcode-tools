@@ -1,0 +1,9 @@
+PKG=MDXfcode
+NAME=OpenBoot FCode tools
+#VERSION=Version 0.2
+VENDOR=Malte Dehling
+EMAIL=mdehling@gmail.com
+CLASSES=none
+CATEGORY=system
+ARCH=sparc
+BASEDIR=/opt

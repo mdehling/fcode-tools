@@ -1,0 +1,75 @@
+= FCode Tools
+Malte Dehling <mdehling@gmail.com>
+
+:imagesdir: https://raw.githubusercontent.com/mdehling/fcode-tools/main/img/
+
+
+FCode Tools is a (slowly growing) collection of tools for working with Sun
+Microsystems OpenBoot firmware (FCode).  The primary development platforms are
+Solaris 7 and NetBSD 10, with periodic testing on a current Linux system.
+
+
+Installing the Binary Package
+-----------------------------
+I currently only provide a binary package for Solaris 7:
+https://github.com/mdehling/fcode-tools/raw/main/pkg/MDXfcode-v0.2-sparc.pkg[MDXfcode-v0.2-sparc.pkg].
+It can be installed using the `pkgadd` command.  By default, this will install
+the package in `/opt/MDXfcode`.  You will probably want to add
+`/opt/MDXfcode/bin` to your `PATH` variable.
+
+image:install.png["Installation Process"]
+
+
+Installing from Source
+----------------------
+To compile, simply run `make` in the repositories root directory.  This will
+compile the sources and run some regression tests.  Before doing this,
+however, take a moment to check the `pass:[src/Makefile.`uname`]` file for
+your system.  On a reasonably modern system you should only have to set the
+`CC` variable to your preferred C compiler.
+
+To compile on older systems, you may need to make additional changes (have a
+look at `src/Makefile.SunOS`.)  Currently you will need, at a minimum, a
+working `vsnprintf` implementation.  The earliest version of Solaris to
+provide one is Solaris 2.6.
+
+If you manage to compile the sources, you will be left with a binary named
+`fcode` in the `src` directory.  Simply place it somewhere in your path, e.g.,
+in `/usr/local/bin` or `$HOME/bin`.
+
+
+Usage
+-----
+Running the `fcode` executable will print the following usage instructions:
+
+----
+usage:
+	fcode [-h|-v]
+	fcode detokenize [-2|-3] [-o <output.fth>] input.fcode
+	fcode extract [-o <output.fcode>] input.bin
+----
+
+Running `fcode -v` prints version information, `fcode -h` or any invalid
+option will again print the above usage instructions.
+
+The `fcode detokenize` command reads FCode from the specified input file and
+writes the detokenized output Forth code to the output file (if specified) or
+to the standard output.  The options `-2` and `-3` select which FCode version
+to treat the input as.  The default is version 2.
+
+The `fcode extract` command tries to locate FCode inside the specified input
+binary file.  The output will be written to the specified file or, if none is
+given, to a file in the current directory with the same name as the input file
+but with an extension of `.fcode`.
+
+An FCode tokenizer is a work in progress and I hope to add it soon.  At least
+on Solaris you can use Sun's own FCode tokenizer until then.  It is available
+https://archive.org/details/sun-ddk-v2.6[here] on the internet archive.  Don't
+use Sun's detokenizer, though.  It has some very annoying bugs, which is the
+reason I wrote my own in the first place.
+
+
+References
+----------
+- Sun 802-1941-10 _Writing FCode 2.x Programs_
+- Sun 806-1379-10 _Writing FCode 3.x Programs_

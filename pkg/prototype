@@ -1,0 +1,6 @@
+i pkginfo
+i copyright=../LICENSE
+!default 0755 root bin
+d none MDXfcode
+d none MDXfcode/bin
+f none MDXfcode/bin/fcode=../src/fcode
